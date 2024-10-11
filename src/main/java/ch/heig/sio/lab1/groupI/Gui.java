@@ -1,4 +1,4 @@
-package ch.heig.sio.lab1.groupX;
+package ch.heig.sio.lab1.groupI;
 
 import ch.heig.sio.lab1.display.HeuristicComboItem;
 import ch.heig.sio.lab1.display.TspSolverGui;
