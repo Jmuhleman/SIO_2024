@@ -102,7 +102,7 @@ public class NearestInsertion implements ObservableTspConstructiveHeuristic {
         }
 
         // Ajouter la distance pour fermer la boucle
-        length += data.getDistance(tourList.get(n - 1), tourList.get(0));
+        length += data.getDistance(tourList.getLast(), tourList.getFirst());
 
         return new TspTour(data, tour, length);
     }
