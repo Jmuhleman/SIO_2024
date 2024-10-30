@@ -1,3 +1,12 @@
+/**
+ * À chaque étape, la classe choisit une ville non visitée au hasard et
+ * l'insère à la position optimale dans la tournée afin de minimiser
+ * l'augmentation de la distance totale. La méthode {@link #computeTour(TspData, int, TspHeuristicObserver)}
+ * gère l'itération et l'insertion.
+ * <p>
+ * @auteurs Ronquillo Cristhian, Muhlemann Julien
+ */
+
 package ch.heig.sio.lab1.groupI.heuristique;
 import ch.heig.sio.lab1.display.ObservableTspConstructiveHeuristic;
 import ch.heig.sio.lab1.display.TspHeuristicObserver;

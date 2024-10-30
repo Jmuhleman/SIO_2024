@@ -1,3 +1,18 @@
+/**
+ * AbstractInsertionHeuristic fournit un modèle pour construire des solutions heuristiques
+ * pour le Problème du Voyageur de Commerce (TSP).
+ * Cette classe abstraite facilite la création de tournées en ajoutant des villes
+ * de manière itérative, en fonction d'une heuristique spécifique.
+ * <p>
+ * Les sous-classes définissent la stratégie de sélection de la prochaine ville à insérer
+ * en implémentant la méthode {@link #selectNextCity(long[], boolean[])}. La classe abstraite
+ * gère l'insertion de la ville sélectionnée à la position optimale dans la tournée pour
+ * minimiser la distance totale du parcours.
+ * <p>
+ * @authors Ronquillo Cristhian, Muhlemann Julien
+ */
+
+
 package ch.heig.sio.lab1.groupI.heuristique;
 
 import ch.heig.sio.lab1.display.ObservableTspConstructiveHeuristic;
