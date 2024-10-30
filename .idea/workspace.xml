@@ -5,11 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a6357dfe-bf78-4a4b-a2ef-16e22c63e384" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/SIO_2425_labo1.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/SIO_2425_labo1.pdf" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/Analyze.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/Analyze.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/FarthestInsertion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/FarthestInsertion.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/heuristique/AbstractInsertionHeuristic.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/Gui.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/Gui.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/RandomInsertion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/RandomInsertion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/heuristique/FarthestInsertion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/heuristique/FarthestInsertion.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/heuristique/NearestInsertion.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ch/heig/sio/lab1/groupI/heuristique/NearestInsertion.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +109,7 @@
       <workItem from="1728980463061" duration="19000" />
       <workItem from="1730123813952" duration="5562000" />
       <workItem from="1730277767965" duration="277000" />
-      <workItem from="1730279128780" duration="2742000" />
+      <workItem from="1730279128780" duration="5179000" />
     </task>
     <servers />
   </component>

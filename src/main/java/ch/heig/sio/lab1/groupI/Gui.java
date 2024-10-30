@@ -4,6 +4,7 @@ import ch.heig.sio.lab1.display.HeuristicComboItem;
 import ch.heig.sio.lab1.display.TspSolverGui;
 import ch.heig.sio.lab1.groupI.heuristique.FarthestInsertion;
 import ch.heig.sio.lab1.groupI.heuristique.NearestInsertion;
+import ch.heig.sio.lab1.groupI.heuristique.RandomInsertion;
 import ch.heig.sio.lab1.sample.CanonicalTour;
 import com.formdev.flatlaf.FlatLightLaf;
 
