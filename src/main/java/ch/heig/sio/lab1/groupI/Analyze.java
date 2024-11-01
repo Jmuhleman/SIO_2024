@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public final class Analyze {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         // TODO
         //  - Renommer le package ;
         //  - Implémenter les différentes heuristiques en écrivant le code dans ce package, et uniquement celui-ci
@@ -32,11 +32,11 @@ public final class Analyze {
         // u1817 : 57201
         String[] filePaths = {
                 "data/att532.dat",
-                //"data/u574.dat",
-                //"data/pcb442.dat",
-                //"data/pcb1173.dat",
-                //"data/u1817.dat",
-                //"data/nrw1379.dat",
+                "data/u574.dat",
+                "data/pcb442.dat",
+                "data/pcb1173.dat",
+                "data/u1817.dat",
+                "data/nrw1379.dat"
         };
 
         String[] heuristicNames = {
@@ -59,33 +59,32 @@ public final class Analyze {
         for (int i = 0; i < data.length; i++) {
             TspData tspData = data[i];
             int totalCities = tspData.getNumberOfCities();
-            String csvFileName = "statistics_" + filePaths[i].substring(filePaths[i].lastIndexOf('/') + 1).replace(".dat", ".csv");
 
-            try (PrintWriter writer = new PrintWriter(new FileWriter(csvFileName))) {
-                // Write the CSV header
-                writer.println("Dataset,CityCount,Heuristic,TourLength");
+            // Pour chaque heuristique
+            for (int j = 0; j < heuristics.length; j++) {
 
-                //System.out.printf("Dataset: %s (Total Cities: %d)%n", filePaths[i], totalCities);
+                String csvFileName = "statistics_" + heuristicNames[j] + "_" + filePaths[i].substring(filePaths[i].lastIndexOf('/') + 1).replace(".dat", ".csv");
+                try (PrintWriter writer = new PrintWriter(new FileWriter(csvFileName))) {
 
-                // Pour chaque nombre de villes
-                for (int cityCount = 1; cityCount < totalCities; cityCount+=10) {
-                    //System.out.printf("  Running heuristics for %d cities:%n", cityCount);
+                    writer.println("Dataset,CityCount,Heuristic,TourLength");
 
-                    // Pour chaque heuristique
-                    for (int j = 0; j < heuristics.length; j++) {
+                    // Chaque ville de départ
+                    for (int cityCount = 0; cityCount < totalCities; cityCount++) {
 
                         TspTour tour = heuristics[j].computeTour(tspData, cityCount);
                         int tourLength = (int) tour.length();
-                        // Écriture en csv
                         writer.printf("%s,%d,%s,%d%n", filePaths[i], cityCount, heuristicNames[j], tourLength);
                     }
+
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
                 }
-                System.out.printf("Results saved to %s%n", csvFileName);
 
 
-            } catch (IOException e) {
-                System.err.printf("Error writing to file %s: %s%n", csvFileName, e.getMessage());
             }
+
         }
     }
+
+
 }
