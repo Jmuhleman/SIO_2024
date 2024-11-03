@@ -8,39 +8,13 @@
  */
 
 package ch.heig.sio.lab1.groupI.heuristique;
-import ch.heig.sio.lab1.display.ObservableTspConstructiveHeuristic;
 import ch.heig.sio.lab1.display.TspHeuristicObserver;
-import ch.heig.sio.lab1.tsp.Edge;
 import ch.heig.sio.lab1.tsp.TspData;
 import ch.heig.sio.lab1.tsp.TspTour;
 
 import java.util.*;
 
-public class RandomInsertion implements ObservableTspConstructiveHeuristic {
-
-    private static final class Traversal implements Iterator<Edge> {
-        private final List<Integer> tour;
-        private int index;
-
-        Traversal(List<Integer> tour) {
-            this.tour = tour;
-            this.index = 0;
-        }
-
-        @Override
-        public boolean hasNext() {
-            return index < tour.size();
-        }
-
-        @Override
-        public Edge next() {
-            if (!hasNext()) throw new NoSuchElementException();
-            int from = tour.get(index % tour.size());
-            int to = tour.get((index + 1) % tour.size());
-            index++;
-            return new Edge(from, to);
-        }
-    }
+public class RandomInsertion extends InsertionHeuristic {
 
     @Override
     public TspTour computeTour(TspData data, int startCityIndex, TspHeuristicObserver observer) {
@@ -83,8 +57,6 @@ public class RandomInsertion implements ObservableTspConstructiveHeuristic {
 
         // Boucle principale pour insérer les villes restantes
         while (!remainingCities.isEmpty()) {
-            // Mélanger les villes restantes
-            Collections.shuffle(remainingCities, random);
 
             // Choisir la première ville aléatoire
             int cityToInsert = remainingCities.removeFirst();
