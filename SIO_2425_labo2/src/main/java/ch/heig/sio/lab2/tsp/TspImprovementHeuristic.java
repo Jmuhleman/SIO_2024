@@ -21,4 +21,5 @@ public interface TspImprovementHeuristic {
    * @throws NullPointerException if {@code initialTour} is null
    */
   TspTour computeTour(TspTour initialTour);
+
 }

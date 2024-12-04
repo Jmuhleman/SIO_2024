@@ -2,6 +2,7 @@ package ch.heig.sio.lab2.groupJ;
 
 import ch.heig.sio.lab2.groupJ.heuristique.FarthestInsertion;
 import ch.heig.sio.lab2.groupJ.heuristique.NearestInsertion;
+import ch.heig.sio.lab2.groupJ.heuristique.TwoOpt;
 import ch.heig.sio.lab2.tsp.RandomTour;
 import ch.heig.sio.lab2.tsp.TspData;
 import ch.heig.sio.lab2.display.HeuristicComboItem;
@@ -59,15 +60,17 @@ public final class Analyze {
         var Ri = new RandomTour();
 
         //création des tournées
-        var tourneeFa = Fa.computeTour(data_sets[0]);
+        var tourneeFa = Fa.computeTour(data_sets[0], 0);
+        var tourneeNi = Ni.computeTour(data_sets[0], 0);
+        var tourneeRi = Ri.computeTour(data_sets[0], 0);
+
+        var twoOpt = new TwoOpt();
 
         //partir d'une tournée aléatoire
-
-
-        //partir d'une tournee construite par l'heuristique inserton la plus éloignée
-
-
-        //partir d'une tournee construite par l'heuristique inserton la plus proche
-
+        var tourneeTwoOptAl = twoOpt.computeTour(tourneeFa);
+        var tourneeTwoOptNi = twoOpt.computeTour(tourneeNi);
+        var tourneeTwoOptFi = twoOpt.computeTour(tourneeRi);
+        //affichage des résultats
+        System.out.println("Farthest Insertion : " + tourneeFa.length());
     }
 }
