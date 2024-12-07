@@ -1,0 +1,33 @@
+Heuristic                 Min   % of Opt      Max   % of Opt     Mean   % of Opt   StdDev
+
+Dataset: att532 (Optimal: 86729)
+Farthest Insertion      93396     107.69%    94078     108.47% 93737.00     108.08%   341.00
+Nearest Insertion       97059     111.91%    98378     113.43% 97718.50     112.67%   659.50
+Random Insertion        93922     108.29%    94361     108.80% 94141.50     108.55%   219.50
+
+Dataset: u574 (Optimal: 36905)
+Farthest Insertion      40072     108.58%    40222     108.99% 40147.00     108.78%    75.00
+Nearest Insertion       40674     110.21%    40857     110.71% 40765.50     110.46%    91.50
+Random Insertion        40243     109.04%    40321     109.26% 40282.00     109.15%    39.00
+
+Dataset: pcb442 (Optimal: 50778)
+Farthest Insertion      55120     108.55%    59375     116.93% 56871.31     112.00%   743.47
+Nearest Insertion       54463     107.26%    56324     110.92% 55414.87     109.13%   410.74
+Random Insertion        54781     107.88%    58320     114.85% 56259.47     110.79%   806.72
+
+Dataset: pcb1173 (Optimal: 56892)
+Farthest Insertion      64322     113.06%    64684     113.70% 64492.33     113.36%   148.55
+Nearest Insertion       62557     109.96%    63183     111.06% 62805.33     110.39%   271.43
+Random Insertion        63207     111.10%    64903     114.08% 64222.33     112.88%   731.71
+
+Dataset: u1817 (Optimal: 57201)
+Farthest Insertion      67379     117.79%    68476     119.71% 67759.75     118.46%   423.21
+Nearest Insertion       64027     111.93%    64318     112.44% 64169.75     112.18%   123.29
+Random Insertion        65328     114.21%    66130     115.61% 65783.75     115.00%   292.59
+
+Dataset: nrw1379 (Optimal: 56638)
+Farthest Insertion      62236     109.88%    62328     110.05% 62296.33     109.99%    42.68
+Nearest Insertion       63793     112.63%    64074     113.13% 63973.33     112.95%   127.80
+Random Insertion        62737     110.77%    62886     111.03% 62800.00     110.88%    62.97
+
+Process finished with exit code 0

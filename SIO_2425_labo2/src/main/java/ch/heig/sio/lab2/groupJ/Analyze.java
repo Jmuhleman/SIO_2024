@@ -1,6 +1,4 @@
 package ch.heig.sio.lab2.groupJ;
-
-import ch.heig.sio.lab2.display.HeuristicComboItem;
 import ch.heig.sio.lab2.groupJ.heuristique.FarthestInsertion;
 import ch.heig.sio.lab2.groupJ.heuristique.NearestInsertion;
 import ch.heig.sio.lab2.groupJ.heuristique.TwoOpt;
@@ -81,22 +79,22 @@ public final class Analyze {
     private static void analyzeHeuristic(String heuristicName, Object heuristic, TspData tspData, TwoOpt twoOpt, int optimalValue) {
         ArrayList<Integer> tourLengths = new ArrayList<>();
         int totalCities = tspData.getNumberOfCities();
+
         // pour chaque ville lancer l'heuristique correspondante
-        for (int cityCount = 0; cityCount < totalCities; cityCount++) {
-            TspTour initialTour;
-            if (heuristic instanceof FarthestInsertion) {
-                initialTour = ((FarthestInsertion) heuristic).computeTour(tspData, cityCount);
-            } else if (heuristic instanceof NearestInsertion) {
-                initialTour = ((NearestInsertion) heuristic).computeTour(tspData, cityCount);
-            } else if (heuristic instanceof RandomTour) {
-                initialTour = ((RandomTour) heuristic).computeTour(tspData, cityCount);
-            } else {
-                throw new IllegalArgumentException("Unsupported heuristic");
-            }
+        for (int cityCount = 0; cityCount < totalCities; ) {
+            TspTour initialTour = switch (heuristic) {
+                case FarthestInsertion farthestInsertion -> farthestInsertion.computeTour(tspData, cityCount);
+                case NearestInsertion nearestInsertion -> nearestInsertion.computeTour(tspData, cityCount);
+                case RandomTour randomTour -> randomTour.computeTour(tspData, cityCount);
+                case null, default -> throw new IllegalArgumentException("Unsupported heuristic");
+            };
 
             // Optimiser le tour de départ avec 2-opt
             TspTour optimizedTour = twoOpt.computeTour(initialTour);
             tourLengths.add((int) optimizedTour.length());
+
+
+            cityCount += ((totalCities < 500) ? 10 : 500);
         }
         // Extraire les statistiques
         int min = tourLengths.stream().mapToInt(Integer::intValue).min().orElse(0);
