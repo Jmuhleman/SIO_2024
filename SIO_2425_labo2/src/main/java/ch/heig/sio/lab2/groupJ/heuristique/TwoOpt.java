@@ -82,17 +82,10 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
                 }
             }
             if (maxSaving > 0) {
-                //System.out.println("maxSaving= " + maxSaving + " for swap (" + bestI + ", " + bestJ + ")");
                 twoOpt(currentTour, bestI + 1, bestJ);
                 bestDistance -= maxSaving;
                 improvement = true;
-                /*
-                System.out.println("Current tour: " + Arrays.toString(currentTour));
-                System.out.println("distance from 0 to 1: " + data.getDistance(0, 1));
-                System.out.println("distance from 2 to 3: " + data.getDistance(2, 3));
-                System.out.println("distance from 1 to 2: " + data.getDistance(1, 2));
-                System.out.println("distance from 0 to 3: " + data.getDistance(0, 3));
-                */
+
                 observer.update(new Traversal(currentTour));
             }
         }
