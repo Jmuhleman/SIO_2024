@@ -6,6 +6,9 @@ import ch.heig.sio.lab2.tsp.Edge;
 import ch.heig.sio.lab2.tsp.TspData;
 import ch.heig.sio.lab2.tsp.TspTour;
 
+
+import javax.security.sasl.SaslServer;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -39,67 +42,60 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
 
     }
 
-    private int[] twoOptSwap(int[] tour, int i, int j) {
-        int[] newTour = tour.clone(); //TODO faire ne place -> pas de copie malheureux !
+    private void twoOpt(int[] tour, int i, int j) {
         while (i < j) {
-            int temp = newTour[i];
-            newTour[i] = newTour[j];
-            newTour[j] = temp;
+            int temp = tour[i];
+            tour[i] = tour[j];
+            tour[j] = temp;
             i++;
             j--;
         }
-        return newTour;
     }
 
-    /**
-     *
-     * @param data
-     * @param i
-     * @param j
-     * @param ip1
-     * @param jp1
-     * @return
-     */
-    private long computeDistance(TspData data, int i , int j, int ip1, int jp1) {
-        long current_distance = data.getDistance(i, ip1) + data.getDistance(j, jp1);
-        long new_distance = data.getDistance(i, j) + data.getDistance(ip1, jp1);
-        //return number < 0 if saving is worse, otherwise return something positive
+    private long computeDistance(TspData data, int i, int j, int ip1, int jp1, int[] tour) {
+        long current_distance = data.getDistance(tour[i], tour[ip1]) + data.getDistance(tour[j], tour[jp1]);
+        long new_distance = data.getDistance(tour[i], tour[j]) + data.getDistance(tour[ip1], tour[jp1]);
         return current_distance - new_distance;
     }
 
     @Override
     public TspTour computeTour(TspTour initialTour, TspHeuristicObserver observer) {
-
         int[] currentTour = initialTour.tour().copy();
         TspData data = initialTour.data();
-
         long bestDistance = initialTour.length();
         boolean improvement = true;
 
-        System.out.println("avant de while");
-
         while (improvement) {
             improvement = false;
-            for (int i = 1; i < currentTour.length - 1; i++) {
-                for (int j = i + 1; j < currentTour.length - 1; j++) {
+            int bestI = -1, bestJ = -1;
+            long saving = 0;
+            long maxSaving = 0;
 
-                    int[] newTour = twoOptSwap(currentTour, i, j);
-                    long saving = computeDistance(data, i, j, i + 1, j + 1);
-
-                    if (saving > 0) {
-                        currentTour = newTour;
-                        bestDistance -= saving;
-                        improvement = true;
-                        System.out.println("(" + i + " ," + j + ") : improvement = true");
-                        observer.update(new Traversal(currentTour));
+            for (int i = 0; i < currentTour.length; i++) {
+                for (int j = i + 1; j < currentTour.length; j++) {
+                    saving = computeDistance(data, i, j, (i + 1), (j + 1) % currentTour.length, currentTour);
+                    if (saving > maxSaving) {
+                        maxSaving = saving;
+                        bestI = i;
+                        bestJ = j;
                     }
                 }
             }
-            System.out.println("fin de while, improvement = " + improvement);
+            if (maxSaving > 0) {
+                //System.out.println("maxSaving= " + maxSaving + " for swap (" + bestI + ", " + bestJ + ")");
+                twoOpt(currentTour, bestI + 1, bestJ);
+                bestDistance -= maxSaving;
+                improvement = true;
+                /*
+                System.out.println("Current tour: " + Arrays.toString(currentTour));
+                System.out.println("distance from 0 to 1: " + data.getDistance(0, 1));
+                System.out.println("distance from 2 to 3: " + data.getDistance(2, 3));
+                System.out.println("distance from 1 to 2: " + data.getDistance(1, 2));
+                System.out.println("distance from 0 to 3: " + data.getDistance(0, 3));
+                */
+                observer.update(new Traversal(currentTour));
+            }
         }
-
         return new TspTour(data, currentTour, bestDistance);
     }
-
-
 }

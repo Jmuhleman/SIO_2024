@@ -13,7 +13,6 @@ import com.formdev.flatlaf.FlatLightLaf;
 public final class Gui {
   public static void main(String[] args) {
     ObservableTspConstructiveHeuristic[] constructiveHeuristics = {
-        new HeuristicComboItem.Constructive("Random tour", new RandomTour()),
             new HeuristicComboItem.Constructive("Nearest insertion", new NearestInsertion()),
             new HeuristicComboItem.Constructive("Farthest insertion", new FarthestInsertion()),
             new HeuristicComboItem.Constructive("Random insertion", new RandomTour())
