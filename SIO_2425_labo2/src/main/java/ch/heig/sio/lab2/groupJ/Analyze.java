@@ -1,8 +1,10 @@
 package ch.heig.sio.lab2.groupJ;
+
 import ch.heig.sio.lab2.groupJ.heuristique.FarthestInsertion;
 import ch.heig.sio.lab2.groupJ.heuristique.NearestInsertion;
 import ch.heig.sio.lab2.groupJ.heuristique.TwoOpt;
 import ch.heig.sio.lab2.tsp.RandomTour;
+import ch.heig.sio.lab2.tsp.TspConstructiveHeuristic;
 import ch.heig.sio.lab2.tsp.TspData;
 import ch.heig.sio.lab2.tsp.TspTour;
 
@@ -52,11 +54,14 @@ public final class Analyze {
         for (int i = 0; i < filePaths.length; i++) {
             data[i] = TspData.fromFile(filePaths[i]);
         }
+        long seed = 0x134DAE9;
+        RandomGenerator rnd = RandomGeneratorFactory.of("Random").create(seed);
 
         // Instancier les heuristiques de départ
         FarthestInsertion farthestInsertion = new FarthestInsertion();
         NearestInsertion nearestInsertion = new NearestInsertion();
-        RandomTour randomInsertion = new RandomTour();
+        RandomTour randomInsertion = new RandomTour(rnd);
+
         TwoOpt twoOpt = new TwoOpt();
 
         // En-tête du tableau de statistiques
@@ -65,36 +70,34 @@ public final class Analyze {
 
         for (int i = 0; i < data.length; i++) {
             TspData tspData = data[i];
+            TspTour initialCities = randomInsertion.computeTour(data[i], i);
+
             String datasetName = filePaths[i].substring(filePaths[i].lastIndexOf('/') + 1).replace(".dat", "");
             int optimalValue = optimalValues.getOrDefault(datasetName, -1);
-            // affichage du nom du dataset et de la valeur optimale
             System.out.println("\nDataset: " + datasetName + " (Optimal: " + optimalValue + ")");
-            // Analyser chaque heuristique
-            analyzeHeuristic("Farthest Insertion", farthestInsertion, tspData, twoOpt, optimalValue);
-            analyzeHeuristic("Nearest Insertion", nearestInsertion, tspData, twoOpt, optimalValue);
-            analyzeHeuristic("Random Insertion", randomInsertion, tspData, twoOpt, optimalValue);
+
+            analyzeHeuristic("Random Insertion", randomInsertion, tspData, twoOpt, optimalValue, initialCities);
+            analyzeHeuristic("Farthest Insertion", farthestInsertion, tspData, twoOpt, optimalValue, initialCities);
+            analyzeHeuristic("Nearest Insertion", nearestInsertion, tspData, twoOpt, optimalValue, initialCities);
         }
     }
 
-    private static void analyzeHeuristic(String heuristicName, Object heuristic, TspData tspData, TwoOpt twoOpt, int optimalValue) {
+    private static void analyzeHeuristic(String heuristicName, TspConstructiveHeuristic heuristic, TspData tspData, TwoOpt twoOpt, int optimalValue, TspTour initialCities) {
+
         ArrayList<Integer> tourLengths = new ArrayList<>();
-        int totalCities = tspData.getNumberOfCities();
+        long time = 0, startTime, endTime;
+        final int NB_TOUR = 10;
 
-        // pour chaque ville lancer l'heuristique correspondante
-        for (int cityCount = 0; cityCount < totalCities; ) {
-            TspTour initialTour = switch (heuristic) {
-                case FarthestInsertion farthestInsertion -> farthestInsertion.computeTour(tspData, cityCount);
-                case NearestInsertion nearestInsertion -> nearestInsertion.computeTour(tspData, cityCount);
-                case RandomTour randomTour -> randomTour.computeTour(tspData, cityCount);
-                case null, default -> throw new IllegalArgumentException("Unsupported heuristic");
-            };
+        for (int i = 0; i < NB_TOUR; ++i) {
+            startTime = System.nanoTime();
 
-            // Optimiser le tour de départ avec 2-opt
-            TspTour optimizedTour = twoOpt.computeTour(initialTour);
+            TspTour currentTour = heuristic.computeTour(tspData, initialCities.tour().get(i));
+            TspTour optimizedTour = twoOpt.computeTour(currentTour);
+
+            endTime = System.nanoTime();
+            time += endTime - startTime;
             tourLengths.add((int) optimizedTour.length());
 
-
-            cityCount += ((totalCities < 500) ? 10 : 500);
         }
         // Extraire les statistiques
         int min = tourLengths.stream().mapToInt(Integer::intValue).min().orElse(0);
@@ -107,9 +110,11 @@ public final class Analyze {
         double maxPercentOptimal = optimalValue > 0 ? (max / (double) optimalValue) * 100 : 0.0;
         double meanPercentOptimal = optimalValue > 0 ? (mean / (double) optimalValue) * 100 : 0.0;
 
+        double averageTime = (double) time / (NB_TOUR * 1e9);
+
         // Afficher les statistiques
-        System.out.printf("%-20s %8d %10.2f%% %8d %10.2f%% %8.2f %10.2f%% %8.2f%n",
-                heuristicName, min, minPercentOptimal, max, maxPercentOptimal, mean, meanPercentOptimal, stdDev);
+        System.out.printf("%-20s %8d %10.2f%% %8d %10.2f%% %8.2f %10.2f%% %8.2f%n %8.3f",
+                heuristicName, min, minPercentOptimal, max, maxPercentOptimal, mean, meanPercentOptimal, stdDev, averageTime);
     }
 
     private static double calculateStdDev(ArrayList<Integer> lengths, double mean) {
