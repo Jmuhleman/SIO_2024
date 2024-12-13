@@ -81,7 +81,7 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
         int ip1 = (i + 1) % n;
         int jp1 = (j + 1) % n;
 
-        long distOriginale = data.getDistance(tour[sssssi], tour[ip1]) + data.getDistance(tour[j], tour[jp1]);
+        long distOriginale = data.getDistance(tour[i], tour[ip1]) + data.getDistance(tour[j], tour[jp1]);
         long distNouvelle = data.getDistance(tour[i], tour[j]) + data.getDistance(tour[ip1], tour[jp1]);
 
         return distOriginale - distNouvelle;
