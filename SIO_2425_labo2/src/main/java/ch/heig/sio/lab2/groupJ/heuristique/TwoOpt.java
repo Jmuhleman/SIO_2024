@@ -155,7 +155,10 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
                 improvement = true;
 
                 // Mise à jour de la solution pour observer l'évolution
-                observer.update(new Traversal(currentTour));
+                if (observer != null) {
+                    observer.update(new Traversal(currentTour));
+                }
+
             }
         }
 
