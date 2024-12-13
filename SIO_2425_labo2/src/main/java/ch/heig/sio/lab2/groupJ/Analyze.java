@@ -77,8 +77,8 @@ public final class Analyze {
             System.out.println("\nDataset: " + datasetName + " (Optimal: " + optimalValue + ")");
 
             analyzeHeuristic("Random Insertion", randomInsertion, tspData, twoOpt, optimalValue, initialCities);
-            analyzeHeuristic("Farthest Insertion", farthestInsertion, tspData, twoOpt, optimalValue, initialCities);
-            analyzeHeuristic("Nearest Insertion", nearestInsertion, tspData, twoOpt, optimalValue, initialCities);
+            //analyzeHeuristic("Farthest Insertion", farthestInsertion, tspData, twoOpt, optimalValue, initialCities);
+            //analyzeHeuristic("Nearest Insertion", nearestInsertion, tspData, twoOpt, optimalValue, initialCities);
         }
     }
 
@@ -113,7 +113,7 @@ public final class Analyze {
         double averageTime = (double) time / (NB_TOUR * 1e9);
 
         // Afficher les statistiques
-        System.out.printf("%-20s %8d %10.2f%% %8d %10.2f%% %8.2f %10.2f%% %8.2f%n %8.3f",
+        System.out.printf("%-20s %8d %10.2f%% %8d %10.2f%% %8.2f %10.2f%% %8.2f %8.3f%n",
                 heuristicName, min, minPercentOptimal, max, maxPercentOptimal, mean, meanPercentOptimal, stdDev, averageTime);
     }
 
