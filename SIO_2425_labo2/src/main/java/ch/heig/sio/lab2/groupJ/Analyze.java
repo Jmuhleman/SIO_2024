@@ -22,14 +22,6 @@ public final class Analyze {
         //  - Documentation soignée comprenant :
         //    - la javadoc, avec auteurs et description des implémentations ;
         //    - des commentaires sur les différentes parties de vos algorithmes.
-
-        // Longueurs optimales :
-        // pcb442  : 50778
-        // att532  : 86729
-        // u574    : 36905
-        // pcb1173 : 56892
-        // nrw1379 : 56638
-        // u1817   : 57201
         String[] filePaths = {
                 "data/att532.dat",
                 "data/u574.dat",
@@ -61,8 +53,8 @@ public final class Analyze {
         FarthestInsertion farthestInsertion = new FarthestInsertion();
         NearestInsertion nearestInsertion = new NearestInsertion();
         RandomTour randomInsertion = new RandomTour(rnd);
-
-        TwoOpt twoOpt = new TwoOpt();
+        RandomTour randomInitalCities = new RandomTour(rnd);
+        final int NB_TOUR = 4;
 
         // En-tête du tableau de statistiques
         System.out.printf("%-20s %8s %10s %8s %10s %8s %10s %8s%n",
@@ -76,21 +68,28 @@ public final class Analyze {
             int optimalValue = optimalValues.getOrDefault(datasetName, -1);
             System.out.println("\nDataset: " + datasetName + " (Optimal: " + optimalValue + ")");
 
-            analyzeHeuristic("Random Insertion", randomInsertion, tspData, twoOpt, optimalValue, initialCities);
-            //analyzeHeuristic("Farthest Insertion", farthestInsertion, tspData, twoOpt, optimalValue, initialCities);
-            //analyzeHeuristic("Nearest Insertion", nearestInsertion, tspData, twoOpt, optimalValue, initialCities);
+            analyzeHeuristic("Random Insertion", randomInsertion, tspData, optimalValue, initialCities, NB_TOUR);
+            analyzeHeuristic("Farthest Insertion", farthestInsertion, tspData, optimalValue, initialCities, NB_TOUR);
+            analyzeHeuristic("Nearest Insertion", nearestInsertion, tspData, optimalValue, initialCities, NB_TOUR);
         }
     }
 
-    private static void analyzeHeuristic(String heuristicName, TspConstructiveHeuristic heuristic, TspData tspData, TwoOpt twoOpt, int optimalValue, TspTour initialCities) {
+    private static void analyzeHeuristic(String heuristicName,
+                                         TspConstructiveHeuristic heuristic,
+                                         TspData tspData,
+                                         int optimalValue,
+                                         TspTour initialCities,
+                                         final int NB_TOUR) {
+
+        TwoOpt twoOpt = new TwoOpt();
 
         ArrayList<Integer> tourLengths = new ArrayList<>();
         long time = 0, startTime, endTime;
-        final int NB_TOUR = 10;
 
         for (int i = 0; i < NB_TOUR; ++i) {
             startTime = System.nanoTime();
-
+            // Une bonne pratique serait de tester que tspData et initialCities ne sont pas null,
+            // mais pour éviter un ralentissement inutile, on ne le fait pas
             TspTour currentTour = heuristic.computeTour(tspData, initialCities.tour().get(i));
             TspTour optimizedTour = twoOpt.computeTour(currentTour);
 

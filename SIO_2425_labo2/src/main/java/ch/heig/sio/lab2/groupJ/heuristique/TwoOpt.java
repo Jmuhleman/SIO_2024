@@ -6,6 +6,9 @@ import ch.heig.sio.lab2.tsp.Edge;
 import ch.heig.sio.lab2.tsp.TspData;
 import ch.heig.sio.lab2.tsp.TspTour;
 
+
+import javax.security.sasl.SaslServer;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
@@ -50,9 +53,10 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
     /**
      * Inverse l’ordre des villes dans le tableau 'tour' entre les indices i et j (inclus).
      * Cette opération correspond à l’application du 2-échange sur le segment concerné.
+     *
      * @param tour Le tableau représentant la tournée.
-     * @param i Indice de début.
-     * @param j Indice de fin.
+     * @param i    Indice de début.
+     * @param j    Indice de fin.
      */
     private void twoOptSwap(int[] tour, int i, int j) {
         while (i < j) {
@@ -71,8 +75,8 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
      * Si ce gain est positif, le 2-échange est améliorant.
      *
      * @param data Les données du TSP (permettent d’accéder aux distances).
-     * @param i Indice i dans la tournée.
-     * @param j Indice j dans la tournée, avec j > i.
+     * @param i    Indice i dans la tournée.
+     * @param j    Indice j dans la tournée, avec j > i.
      * @param tour Le tableau représentant la tournée.
      * @return Le gain de distance (positif si améliorant).
      */
@@ -94,7 +98,7 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
      * @param data Le problème TSP
      * @param tour Le tableau représentant la tournée actuelle.
      * @return Un tableau [bestI, bestJ, bestGain] donnant les indices i, j du meilleur échange trouvé
-     *         ainsi que son gain. Si aucun échange n’est améliorant, bestGain <= 0.
+     * ainsi que son gain. Si aucun échange n’est améliorant, bestGain <= 0.
      */
     private long[] searchBest2OptMove(TspData data, int[] tour) {
         long bestGain = 0;
@@ -128,7 +132,7 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
      * Applique l’heuristique 2-opt « meilleure amélioration » sur la tournée initiale.
      *
      * @param initialTour La tournée initiale.
-     * @param observer Observateur permettant de visualiser l'évolution du tour.
+     * @param observer    Observateur permettant de visualiser l'évolution du tour.
      * @return Une nouvelle TspTour, améliorée localement par 2-opt.
      */
     @Override
@@ -155,7 +159,9 @@ public class TwoOpt implements ObservableTspImprovementHeuristic {
                 improvement = true;
 
                 // Mise à jour de la solution pour observer l'évolution
-                observer.update(new Traversal(currentTour));
+                if (observer != null) {
+                    observer.update(new Traversal(currentTour));
+                }
             }
         }
 
