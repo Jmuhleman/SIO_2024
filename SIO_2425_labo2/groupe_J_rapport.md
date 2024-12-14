@@ -1,6 +1,8 @@
 # Rapport
 
-Ci-dessous se trouve une analyse qualitative des résultats obtenus. 
+<strong>Auteurs : Julien Mühlemann, Cristhian Ronquillo, Dr. Ing. Julien Billeter</strong>
+
+Ci-dessous se trouve une analyse des résultats obtenus. 
 Les statistiques incluent trois heuristiques (Random Insertion, Farthest Insertion et Nearest Insertion) appliquées à plusieurs instances de TSP, 
 avec leurs résultats en pourcentage par rapport à la valeur optimale connue et le temps moyen d’exécution.
 
@@ -101,7 +103,7 @@ Farthest Insertion (0.210 s) est plus rapide que Nearest (0.733 s) et Random (6.
 Ces résultats montrent que le choix de la tournée initiale (Random, Nearest ou Farthest Insertion) a un impact significatif sur la performance finale obtenue après l’amélioration par 2-opt. Selon le dataset, l’une ou l’autre de ces méthodes fournit une base plus favorable à l’optimisation locale. En somme :
 
 - Une solution initiale aléatoire (Random) peut, dans certains cas, donner un point de départ permettant de meilleures améliorations, même si elle est souvent plus éloignée de l’optimal et aussi très souvent l'amélioration la plus lente.
-- Les solutions initiales construites avec Nearest Insertion, plus « locales », facilitent parfois le travail de 2-opt, permettant d’atteindre une bonne qualité finale  mais n’est pas toujours la plus rapide. Sur pcb442, pcb1173 et u1817, elle donne les meilleurs résultats finaux.
-- Les solutions issues de Farthest Insertion, plus « dispersées », peuvent également améliorer le potentiel d’optimisation du 2-opt selon la structure du problème. Elle  est souvent très rapide.
+- Les solutions initiales construites avec Nearest Insertion, plus « locales », facilitent parfois le travail de 2-opt, permettant d’atteindre une bonne qualité finale mais n’est pas toujours la plus rapide. Sur pcb442, pcb1173 et u1817, elle donne les meilleurs résultats finaux.
+- Les solutions issues de Farthest Insertion, plus « dispersées », peuvent également améliorer le potentiel d’optimisation du 2-opt selon la structure du problème. Elle est souvent très rapide.
 
-La qualité de la solution de départ conditionne donc en grande partie l’efficacité du 2-opt et le gain possible. Il est crucial de choisir la méthode de construction initiale en fonction des caractéristiques du dataset et des objectifs (qualité, temps, robustesse) visés.
+La qualité de la solution de départ conditionne donc en grande partie l’efficacité du 2-opt et le gain possible. Il est important de choisir la méthode de construction initiale en fonction des caractéristiques du dataset et des objectifs (qualité, temps, robustesse) visés.

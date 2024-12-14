@@ -14,21 +14,18 @@ import ch.heig.sio.lab2.tsp.TspData;
  * and builds the tour by repeatedly inserting the city that is farthest from any
  * city already in the tour.</p>
  *
- * <p>Complexity (O(n) and time): O(n^2)</p>
- * Author: Dr. Ing. Julien Billeter, Julien Muhlëmann, Crishtian Ronquillo
+ * <p>Complexity (space and time): O(n) and O(n^2)</p>
+ * Author: Julien Mühlemann, Cristhian Ronquillo
  */
 public class FarthestInsertion extends InsertionHeuristic {
-
-    /** An array storing the minimum distances from each city to the current tour. */
-    private long[] minDistances;
 
     /**
      * Initializes the tour and heuristic-specific data structures for the farthest insertion heuristic.
      *
-     * @param data            The TSP data.
-     * @param startCityIndex  The index of the starting city.
-     * @param tourList        The list representing the current tour.
-     * @param inTour          Array indicating whether a city is already in the tour.
+     * @param data           The TSP data.
+     * @param startCityIndex The index of the starting city.
+     * @param tourList       The list representing the current tour.
+     * @param inTour         Array indicating whether a city is already in the tour.
      */
     @Override
     protected void initialize(TspData data, int startCityIndex, List<Integer> tourList, boolean[] inTour) {
@@ -39,12 +36,12 @@ public class FarthestInsertion extends InsertionHeuristic {
         // Initialize the tour with the starting city only (comme NearestInsertion)
         tourList.add(startCityIndex);
         inTour[startCityIndex] = true;
-        length = 0; // No distance yet, une seule ville
+        length = 0; // No distance yet, one city only
 
         // Initialize minDistances for the remaining cities
         for (int city = 0; city < n; city++) {
             if (!inTour[city]) {
-                // La distance minimale d'une ville non dans le tour est la distance à la seule ville du tour.
+                // Each distance of the remaining cities is the distance to the only city in the tour.
                 minDistances[city] = data.getDistance(startCityIndex, city);
             }
         }
@@ -54,9 +51,9 @@ public class FarthestInsertion extends InsertionHeuristic {
      * Selects the next city to insert into the tour.
      * The city selected is the one with the maximum minimum distance to the current tour.
      *
-     * @param data    The TSP data.
-     * @param inTour  Array indicating whether a city is already in the tour.
-     * @return        The index of the next city to insert.
+     * @param data   The TSP data.
+     * @param inTour Array indicating whether a city is already in the tour.
+     * @return The index of the next city to insert.
      */
     @Override
     protected int selectNextCity(TspData data, boolean[] inTour) {
@@ -70,25 +67,5 @@ public class FarthestInsertion extends InsertionHeuristic {
             }
         }
         return bestCity;
-    }
-
-    /**
-     * Updates the minDistances array after inserting a new city into the tour.
-     *
-     * @param data         The TSP data.
-     * @param insertedCity The index of the city that has just been inserted.
-     * @param inTour       Array indicating whether a city is already in the tour.
-     */
-    @Override
-    protected void updateAfterInsertion(TspData data, int insertedCity, boolean[] inTour) {
-        // Update the minimum distances for cities not yet in the tour
-        for (int city = 0; city < n; city++) { // Use n from the base class
-            if (!inTour[city]) {
-                long distance = data.getDistance(city, insertedCity);
-                if (distance < minDistances[city]) {
-                    minDistances[city] = distance;
-                }
-            }
-        }
     }
 }
