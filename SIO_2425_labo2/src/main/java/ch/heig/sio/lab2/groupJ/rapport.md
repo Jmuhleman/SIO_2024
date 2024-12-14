@@ -1,122 +1,15 @@
-Heuristic                 Min   % of Opt      Max       % of Opt  Mean      % of Opt   StdDev   Time (s)
+# Rapport
 
-Dataset: att532 (Optimal: 86729)
-Random Insertion        93231     107,50%    95589     110,22% 93907,75     108,28%   973,39    0,418
-Farthest Insertion      92384     106,52%    95090     109,64% 93653,50     107,98%  1141,64    0,015
-Nearest Insertion       96957     111,79%    98429     113,49% 97559,75     112,49%   542,57    0,059
+Ci-dessous se trouve une analyse qualitative des résultats obtenus. 
+Les statistiques incluent trois heuristiques (Random Insertion, Farthest Insertion et Nearest Insertion) appliquées à plusieurs instances de TSP, 
+avec leurs résultats en pourcentage par rapport à la valeur optimale connue et le temps moyen d’exécution.
 
-Dataset: u574 (Optimal: 36905)
-Random Insertion        39916     108,16%    41325     111,98% 40376,75     109,41%   557,26    0,423
-Farthest Insertion      40807     110,57%    41415     112,22% 41102,50     111,37%   247,48    0,013
-Nearest Insertion       40797     110,55%    41046     111,22% 40919,50     110,88%   113,60    0,064
+Généralités :
+* Random Insertion : Génère aléatoirement une solution initiale puis l’améliore.
+* Farthest Insertion (Insertion la plus éloignée) : Ajoute à chaque étape la ville la plus distante de la tournée courante.
+* Nearest Insertion (Insertion la plus proche) : Ajoute à chaque étape la ville la plus proche de la tournée courante.
 
-Dataset: pcb442 (Optimal: 50778)
-Random Insertion        55998     110,28%    56384     111,04% 56172,50     110,62%   175,57    0,180
-Farthest Insertion      55388     109,08%    57736     113,70% 56497,75     111,26%   913,81    0,005
-Nearest Insertion       54964     108,24%    55628     109,55% 55283,75     108,87%   272,71    0,023
-
-Dataset: pcb1173 (Optimal: 56892)
-Random Insertion        62770     110,33%    64874     114,03% 63615,25     111,82%   821,40    4,332
-Farthest Insertion      63667     111,91%    65026     114,30% 64357,25     113,12%   481,20    0,144
-Nearest Insertion       62551     109,95%    63079     110,87% 62793,25     110,37%   198,54    0,548
-
-Dataset: u1817 (Optimal: 57201)
-Random Insertion        65240     114,05%    66130     115,61% 65598,50     114,68%   340,41   22,322
-Farthest Insertion      67078     117,27%    68135     119,12% 67660,25     118,29%   475,59    0,492
-Nearest Insertion       64021     111,92%    64283     112,38% 64145,25     112,14%    93,37    1,507
-
-Dataset: nrw1379 (Optimal: 56638)
-Random Insertion        62428     110,22%    62755     110,80% 62579,25     110,49%   122,37    6,904
-Farthest Insertion      61654     108,86%    62722     110,74% 62343,50     110,07%   408,81    0,224
-Nearest Insertion       63792     112,63%    64188     113,33% 63996,25     112,99%   190,51    0,728
-
-
-
-### Dataset: att532 (Optimal: 86729)
-
-| Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev | Time (s) |
-|---------------------|-------|----------|-------|----------|----------|----------|--------|----------|
-| Random Insertion    | 93231 | 107.50%  | 95589 | 110.22%  | 93907.75 | 108.28%  | 973.39 | 0.418    |
-| Farthest Insertion  | 92384 | 106.52%  | 95090 | 109.64%  | 93653.50 | 107.98%  | 1141.64| 0.015    |
-| Nearest Insertion   | 96957 | 111.79%  | 98429 | 113.49%  | 97559.75 | 112.49%  | 542.57 | 0.059    |
-
-### Dataset: u574 (Optimal: 36905)
-
-| Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev | Time (s) |
-|---------------------|-------|----------|-------|----------|----------|----------|--------|----------|
-| Random Insertion    | 39916 | 108.16%  | 41325 | 111.98%  | 40376.75 | 109.41%  | 557.26 | 0.423    |
-| Farthest Insertion  | 40807 | 110.57%  | 41415 | 112.22%  | 41102.50 | 111.37%  | 247.48 | 0.013    |
-| Nearest Insertion   | 40797 | 110.55%  | 41046 | 111.22%  | 40919.50 | 110.88%  | 113.60 | 0.064    |
-
-### Dataset: pcb442 (Optimal: 50778)
-
-| Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev | Time (s) |
-|---------------------|-------|----------|-------|----------|----------|----------|--------|----------|
-| Random Insertion    | 55998 | 110.28%  | 56384 | 111.04%  | 56172.50 | 110.62%  | 175.57 | 0.180    |
-| Farthest Insertion  | 55388 | 109.08%  | 57736 | 113.70%  | 56497.75 | 111.26%  | 913.81 | 0.005    |
-| Nearest Insertion   | 54964 | 108.24%  | 55628 | 109.55%  | 55283.75 | 108.87%  | 272.71 | 0.023    |
-
-### Dataset: pcb1173 (Optimal: 56892)
-
-| Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev | Time (s) |
-|---------------------|-------|----------|-------|----------|----------|----------|--------|----------|
-| Random Insertion    | 62770 | 110.33%  | 64874 | 114.03%  | 63615.25 | 111.82%  | 821.40 | 4.332    |
-| Farthest Insertion  | 63667 | 111.91%  | 65026 | 114.30%  | 64357.25 | 113.12%  | 481.20 | 0.144    |
-| Nearest Insertion   | 62551 | 109.95%  | 63079 | 110.87%  | 62793.25 | 110.37%  | 198.54 | 0.548    |
-
-### Dataset: u1817 (Optimal: 57201)
-
-| Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev | Time (s) |
-|---------------------|-------|----------|-------|----------|----------|----------|--------|----------|
-| Random Insertion    | 65240 | 114.05%  | 66130 | 115.61%  | 65598.50 | 114.68%  | 340.41 | 22.322   |
-| Farthest Insertion  | 67078 | 117.27%  | 68135 | 119.12%  | 67660.25 | 118.29%  | 475.59 | 0.492    |
-| Nearest Insertion   | 64021 | 111.92%  | 64283 | 112.38%  | 64145.25 | 112.14%  | 93.37  | 1.507    |
-
-### Dataset: nrw1379 (Optimal: 56638)
-
-| Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev | Time (s) |
-|---------------------|-------|----------|-------|----------|----------|----------|--------|----------|
-| Random Insertion    | 62428 | 110.22%  | 62755 | 110.80%  | 62579.25 | 110.49%  | 122.37 | 6.904    |
-| Farthest Insertion  | 61654 | 108.86%  | 62722 | 110.74%  | 62343.50 | 110.07%  | 408.81 | 0.224    |
-| Nearest Insertion   | 63792 | 112.63%  | 64188 | 113.33%  | 63996.25 | 112.99%  | 190.51 | 0.728    |
-
-
-# Code avec les heuristique corrigées
-
-
-Heuristic                 Min   % of Opt      Max   % of Opt     Mean   % of Opt   StdDev      Time (s)
-
-Dataset: att532 (Optimal: 86729)
-Random Insertion        93231     107,50%    95589     110,22% 93907,75     108,28%   973,39    0,385
-Farthest Insertion      92323     106,45%    94807     109,31% 93517,75     107,83%  1076,34    0,019
-Nearest Insertion       96853     111,67%    98368     113,42% 97446,75     112,36%   561,66    0,061
-
-Dataset: u574 (Optimal: 36905)
-Random Insertion        39916     108,16%    41325     111,98% 40376,75     109,41%   557,26    0,426
-Farthest Insertion      40736     110,38%    41365     112,09% 41017,25     111,14%   266,39    0,013
-Nearest Insertion       40772     110,48%    40974     111,03% 40853,50     110,70%    80,03    0,065
-
-Dataset: pcb442 (Optimal: 50778)
-Random Insertion        55998     110,28%    56384     111,04% 56172,50     110,62%   175,57    0,174
-Farthest Insertion      55276     108,86%    57636     113,51% 56394,25     111,06%   917,20    0,004
-Nearest Insertion       54862     108,04%    55528     109,35% 55183,25     108,68%   273,30    0,021
-
-Dataset: pcb1173 (Optimal: 56892)
-Random Insertion        62770     110,33%    64874     114,03% 63615,25     111,82%   821,40    4,221
-Farthest Insertion      63586     111,77%    64988     114,23% 64293,75     113,01%   497,45    0,143
-Nearest Insertion       62518     109,89%    63041     110,81% 62756,00     110,31%   197,31    0,548
-
-Dataset: u1817 (Optimal: 57201)
-Random Insertion        65240     114,05%    66130     115,61% 65598,50     114,68%   340,41   20,557
-Farthest Insertion      67040     117,20%    68110     119,07% 67631,75     118,24%   479,34    0,486
-Nearest Insertion       63996     111,88%    64258     112,34% 64117,00     112,09%    93,30    1,416
-
-Dataset: nrw1379 (Optimal: 56638)
-Random Insertion        62428     110,22%    62755     110,80% 62579,25     110,49%   122,37    6,570
-Farthest Insertion      61614     108,79%    62706     110,71% 62315,50     110,02%   416,31    0,210
-Nearest Insertion       63779     112,61%    64172     113,30% 63980,75     112,96%   187,55    0,733
-
-### Dataset: att532 (Optimal: 86729)
+## Dataset: att532 (Optimal: 86729)
 
 | Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev  | Time (s) |
 |---------------------|-------|----------|-------|----------|----------|----------|---------|----------|
@@ -124,12 +17,16 @@ Nearest Insertion       63779     112,61%    64172     113,30% 63980,75     112,
 | Farthest Insertion  | 92323 | 106.45%  | 94807 | 109.31%  | 93517.75 | 107.83%  | 1076.34 | 0.019    |
 | Nearest Insertion   | 96853 | 111.67%  | 98368 | 113.42%  | 97446.75 | 112.36%  | 561.66  | 0.061    |
 
-Pour att532, partir d’une solution construite par Farthest Insertion donne la meilleure qualité finale après 2-opt. 
-La solution initiale Farthest Insertion fournit visiblement une base sur laquelle 2-opt peut mieux opérer que sur une tournée aléatoire ou sur la solution Nearest Insertion.
+Pour att532, la Farthest Insertion fournit la meilleure qualité finale après l’application du 2-opt. 
+Le point de départ donné par cette heuristique semble offrir à 2-opt un voisinage plus propice aux améliorations, 
+surpassant ainsi les solutions initiales Random et Nearest.
+
+Farthest Insertion est la plus rapide (0.019 s), largement devant Random (0.385 s) et Nearest (0.061 s).
+
 
 ---
 
-### Dataset: u574 (Optimal: 36905)
+## Dataset: u574 (Optimal: 36905)
 
 | Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev  | Time (s) |
 |---------------------|-------|----------|-------|----------|----------|----------|---------|----------|
@@ -137,12 +34,13 @@ La solution initiale Farthest Insertion fournit visiblement une base sur laquell
 | Farthest Insertion  | 40736 | 110.38%  | 41365 | 112.09%  | 41017.25 | 111.14%  | 266.39  | 0.013    |
 | Nearest Insertion   | 40772 | 110.48%  | 40974 | 111.03%  | 40853.50 | 110.70%  | 80.03   | 0.065    |
 
-Ici, commencer avec une Random Insertion donne finalement les meilleures solutions après 2-opt, surpassant même les heuristiques plus structurées. 
-Le 2-opt, partant d’une solution très variée (aléatoire), parvient à trouver plus facilement des améliorations que sur une base initiale issue de Farthest ou Nearest Insertion.
+Sur u574, la meilleure solution finale est obtenue en partant d’une Random Insertion, ce qui est contre-intuitif. Cette solution aléatoire fournit un point de départ que 2-opt a pu aisément améliorer, dépassant même les heuristiques plus structurées en termes de résultat final.
+
+Farthest Insertion est la plus rapide (0.013 s), Random étant la plus lente (0.426 s).
 
 ---
 
-### Dataset: pcb442 (Optimal: 50778)
+## Dataset: pcb442 (Optimal: 50778)
 
 | Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev  | Time (s) |
 |---------------------|-------|----------|-------|----------|----------|----------|---------|----------|
@@ -150,12 +48,13 @@ Le 2-opt, partant d’une solution très variée (aléatoire), parvient à trouv
 | Farthest Insertion  | 55276 | 108.86%  | 57636 | 113.51%  | 56394.25 | 111.06%  | 917.20  | 0.004    |
 | Nearest Insertion   | 54862 | 108.04%  | 55528 | 109.35%  | 55183.25 | 108.68%  | 273.30  | 0.021    |
 
-Sur pcb442, Nearest Insertion produit la meilleure solution finale après 2-opt. 
-Cela signifie que la structure initiale plus « locale » de Nearest Insertion a offert un meilleur tremplin pour 2-opt, qui a pu davantage peaufiner la tournée pour s’approcher de l’optimal.
+Pour pcb442, la Nearest Insertion mène à la meilleure solution après 2-opt. La structure initiale plus « locale » de Nearest Insertion offre un point de départ qui facilite l’amélioration par 2-opt, permettant d’obtenir une solution plus proche de l’optimal que les autres heuristiques.
+
+Farthest Insertion est la plus rapide (0.004 s), Nearest (0.021 s) et Random (0.174 s) sont plus lentes.
 
 ---
 
-### Dataset: pcb1173 (Optimal: 56892)
+## Dataset: pcb1173 (Optimal: 56892)
 
 | Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev  | Time (s) |
 |---------------------|-------|----------|-------|----------|----------|----------|---------|----------|
@@ -163,12 +62,13 @@ Cela signifie que la structure initiale plus « locale » de Nearest Insertion a
 | Farthest Insertion  | 63586 | 111.77%  | 64988 | 114.23%  | 64293.75 | 113.01%  | 497.45  | 0.143    |
 | Nearest Insertion   | 62518 | 109.89%  | 63041 | 110.81%  | 62756.00 | 110.31%  | 197.31  | 0.548    |
 
-Comme pour pcb442, c’est Nearest Insertion qui, après 2-opt, donne la meilleure qualité. 
-La structure initiale nearest semble ici donner plus de latitude au 2-opt pour obtenir une solution relativement proche de l’optimal.
+Comme pour pcb442, Nearest Insertion produit ici la meilleure solution finale. Le point de départ fourni par Nearest Insertion semble permettre à 2-opt de mieux optimiser la tournée, offrant ainsi un résultat final relativement proche de l’optimal.
+
+Farthest Insertion (0.143 s) est plus rapide que Nearest (0.548 s) et beaucoup plus que Random (4.221 s).
 
 ---
 
-### Dataset: u1817 (Optimal: 57201)
+## Dataset: u1817 (Optimal: 57201)
 
 | Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev  | Time (s) |
 |---------------------|-------|----------|-------|----------|----------|----------|---------|----------|
@@ -176,12 +76,13 @@ La structure initiale nearest semble ici donner plus de latitude au 2-opt pour o
 | Farthest Insertion  | 67040 | 117.20%  | 68110 | 119.07%  | 67631.75 | 118.24%  | 479.34  | 0.486    |
 | Nearest Insertion   | 63996 | 111.88%  | 64258 | 112.34%  | 64117.00 | 112.09%  | 93.30   | 1.416    |
 
-Pour u1817, Nearest Insertion est à nouveau la meilleure base pour le 2-opt, suivi de Random Insertion, puis loin derrière Farthest Insertion. 
-Ce dataset semble ainsi mieux exploiter les propriétés des tournées initiales plus locales (Nearest).
+Pour u1817, la Nearest Insertion surpasse les autres méthodes après 2-opt. Les propriétés locales de cette heuristique initiale semblent plus adaptées à ce dataset, permettant au 2-opt d’atteindre une solution plus proche de l’optimal.
+
+Farthest Insertion (0.486 s) est plus rapide que Nearest (1.416 s). Random est très lente (20.557 s) et moins bonne en qualité.
 
 ---
 
-### Dataset: nrw1379 (Optimal: 56638)
+## Dataset: nrw1379 (Optimal: 56638)
 
 | Heuristic          | Min   | % of Opt | Max   | % of Opt | Mean     | % of Opt | StdDev  | Time (s) |
 |---------------------|-------|----------|-------|----------|----------|----------|---------|----------|
@@ -189,18 +90,18 @@ Ce dataset semble ainsi mieux exploiter les propriétés des tournées initiales
 | Farthest Insertion  | 61614 | 108.79%  | 62706 | 110.71%  | 62315.50 | 110.02%  | 416.31  | 0.210    |
 | Nearest Insertion   | 63779 | 112.61%  | 64172 | 113.30%  | 63980.75 | 112.96%  | 187.55  | 0.733    |
 
-Sur nrw1379, Farthest Insertion offre la meilleure tournée finale après 2-opt, surpassant la Random et surtout la Nearest. 
-Ici, une base plus diversifiée (farthest) aide le 2-opt à mieux améliorer la solution.
+Sur nrw1379, Farthest Insertion aboutit à la meilleure solution après 2-opt, surpassant non seulement la Random Insertion mais surtout la Nearest. Ici, une base plus diversifiée facilite apparemment l’amélioration par 2-opt.
 
-Conclusion globale :
-Les résultats observés soulignent clairement l’influence significative du choix de la tournée initiale (qu’elle soit construite aléatoirement, par nearest insertion ou par farthest insertion) sur la performance finale obtenue après l’amélioration 2-opt. Autrement dit, la qualité de la solution de départ conditionne en grande partie l’efficacité du 2-opt et le gain possible.
+Farthest Insertion (0.210 s) est plus rapide que Nearest (0.733 s) et Random (6.570 s).
 
-Raison et explication :
+---
 
-Point de départ différent : Le 2-opt est un algorithme d’amélioration locale. Il cherche à optimiser une solution déjà existante en testant systématiquement des échanges simples (inversions de segments) pour réduire la longueur du circuit. Si la solution initiale est déjà relativement structurée et proche d’un bon voisinage, le 2-opt pourra plus facilement dénicher des améliorations intéressantes et converger vers un meilleur optimum local.
-Solutions initiales variées :
-Une tournée initiale aléatoire (Random Tour) est généralement de qualité assez moyenne, voire médiocre. Le 2-opt partira alors d’une configuration peu structurée et pourrait améliorer significativement la solution, mais risque aussi de s’arrêter rapidement sur un optimum local de moins bonne qualité, car le point de départ est très loin de l’optimal.
-Une tournée initiale obtenue via nearest insertion (choix systématique de la ville la plus proche) tend à produire une solution initiale déjà cohérente localement, mais qui peut être piégée dans une structure moins flexible. Le 2-opt pourra l’améliorer, mais l’ampleur du gain dépendra de la « rigidité » de la structure initiale.
-Une tournée initiale obtenue via farthest insertion (choix systématique de la ville la plus éloignée) crée souvent une solution plus diversifiée, évitant les enchaînements trop serrés. Selon la nature du problème, cette solution pourra offrir au 2-opt plus de marge de manœuvre, conduisant à de meilleures améliorations.
-En synthèse :
-La construction initiale détermine la « forme » du paysage dans lequel le 2-opt va chercher des améliorations. Une construction initiale « aléatoire » peut donner beaucoup de petits gains au début, mais ne garantit pas un bon résultat final. Une construction via nearest ou farthest insertion fournit une base mieux structurée, sur laquelle le 2-opt pourra travailler plus efficacement, mais parfois les améliorations seront plus limitées. Le tout se reflète dans les résultats finaux : le point de départ impacte directement la qualité et l’ampleur de l’amélioration que 2-opt pourra apporter.
+## Conclusion
+
+Ces résultats montrent que le choix de la tournée initiale (Random, Nearest ou Farthest Insertion) a un impact significatif sur la performance finale obtenue après l’amélioration par 2-opt. Selon le dataset, l’une ou l’autre de ces méthodes fournit une base plus favorable à l’optimisation locale. En somme :
+
+- Une solution initiale aléatoire (Random) peut, dans certains cas, donner un point de départ permettant de meilleures améliorations, même si elle est souvent plus éloignée de l’optimal et aussi très souvent l'amélioration la plus lente.
+- Les solutions initiales construites avec Nearest Insertion, plus « locales », facilitent parfois le travail de 2-opt, permettant d’atteindre une bonne qualité finale  mais n’est pas toujours la plus rapide. Sur pcb442, pcb1173 et u1817, elle donne les meilleurs résultats finaux.
+- Les solutions issues de Farthest Insertion, plus « dispersées », peuvent également améliorer le potentiel d’optimisation du 2-opt selon la structure du problème. Elle  est souvent très rapide.
+
+La qualité de la solution de départ conditionne donc en grande partie l’efficacité du 2-opt et le gain possible. Il est crucial de choisir la méthode de construction initiale en fonction des caractéristiques du dataset et des objectifs (qualité, temps, robustesse) visés.
