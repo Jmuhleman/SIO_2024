@@ -1,8 +1,9 @@
 package montecarlo;
 
 import statistics.StatCollector;
-
+import statistics.InverseStdNormalCDF;
 import java.util.Random;
+import java.lang.Math;
 
 /**
  * This class provides methods for simple Monte Carlo simulations.
@@ -55,6 +56,16 @@ public class MonteCarloSimulation {
 													long additionalNumberOfRuns,
 													Random rnd,
 													StatCollector stat) {
-		//Write your code here
+
+		simulateNRuns(exp, initialNumberOfRuns, rnd, stat);
+		long firstAdditionalNumberOfRuns =
+				(long) Math.ceil(Math.pow(InverseStdNormalCDF.getQuantile((1 + level)/2)
+						* Math.sqrt(stat.getVariance()) / stat.getConfidenceIntervalHalfWidth(level), 2));
+		simulateNRuns(exp, firstAdditionalNumberOfRuns, rnd, stat);
+		if (stat.getConfidenceIntervalHalfWidth(level) > maxHalfWidth) {
+			while (stat.getConfidenceIntervalHalfWidth(level) > maxHalfWidth) {
+				simulateNRuns(exp, additionalNumberOfRuns, rnd, stat);
+			}
+		}
 	}
 }
