@@ -3,7 +3,6 @@ package montecarlo;
 import java.util.Random;
 
 public class BirthdayaradoxExperiment implements Experiment {
-    private double p;
     private int k;
     private int y;
     private int m;
@@ -11,13 +10,11 @@ public class BirthdayaradoxExperiment implements Experiment {
     /**
      * Constructeur de la classe BirthdayaradoxExperiment avec passage de paramètres
      *
-     * @param p
      * @param k
      * @param y
      * @param m
      */
-    public BirthdayaradoxExperiment(double p, int k, int y, int m) {
-        this.p = p;
+    public BirthdayaradoxExperiment(int k, int y, int m) {
         this.k = k;
         this.y = y;
         this.m = m;
@@ -26,10 +23,8 @@ public class BirthdayaradoxExperiment implements Experiment {
     /**
      * Constructeur de la classe BirthdayaradoxExperiment avec paramètres par défaut
      *
-     * @param p
      */
-    public BirthdayaradoxExperiment(double p) {
-        this.p = p;
+    public BirthdayaradoxExperiment() {
         this.k = 23;
         this.y = 365;
         this.m = 2;
@@ -45,17 +40,21 @@ public class BirthdayaradoxExperiment implements Experiment {
      */
     @Override
     public double execute(Random rnd) {
+        // Array to count occurrences of each "date"
         int[] dates = new int[y];
 
+        // Randomly assign k people to dates
         for (int i = 0; i < k; i++) {
             dates[rnd.nextInt(y)]++;
         }
 
+        // Check if any date is chosen m times or more
         for (int i = 0; i < y; i++) {
             if (dates[i] >= m) {
-                return 1.;
+                return 1.0;
             }
         }
-        return 1.;
+
+        return 0.0;
     }
 }

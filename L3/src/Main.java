@@ -1,6 +1,5 @@
 import montecarlo.*;
 import statistics.*;
-
 import java.util.Random;
 
 // Juste pour l'exemple
@@ -20,8 +19,9 @@ public class Main {
 		rnd.setSeed(0x1348ABB);
 
 		Experiment exp = new FairCoinTossExperiment();
+		Experiment bday = new BirthdayaradoxExperiment(23, 365, 2);
 
-		MonteCarloSimulation.simulateNRuns(exp, 1_000_000, rnd, stat);
+		MonteCarloSimulation.simulateNRuns(bday, 1_000_000, rnd, stat);
 
 		System.out.printf("**********************%n  Simulation results%n**********************%n");
 		System.out.printf("Number of tosses generated: %d%n", stat.getNumberOfObs());
