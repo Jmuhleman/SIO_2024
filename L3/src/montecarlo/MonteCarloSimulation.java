@@ -61,6 +61,7 @@ public class MonteCarloSimulation {
 		long firstAdditionalNumberOfRuns =
 				(long) Math.ceil(Math.pow(InverseStdNormalCDF.getQuantile((1 + level)/2)
 						* Math.sqrt(stat.getVariance()) / stat.getConfidenceIntervalHalfWidth(level), 2));
+
 		simulateNRuns(exp, firstAdditionalNumberOfRuns, rnd, stat);
 		if (stat.getConfidenceIntervalHalfWidth(level) > maxHalfWidth) {
 			while (stat.getConfidenceIntervalHalfWidth(level) > maxHalfWidth) {

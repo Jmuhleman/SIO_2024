@@ -31,6 +31,7 @@ public class Main {
         double maxHalfWidth = INITIAL_HALF_WIDTH;
 
         for (int iteration = 1; iteration <= 3; iteration++) {
+            System.out.printf("Iteration %d:%n", iteration);
 
             MonteCarloSimulation.simulateTillGivenCIHalfWidth(bdayExperiment, LEVEL, maxHalfWidth, INITIAL_RUNS, ADDITIONAL_RUNS, rnd, stat);
 
@@ -38,7 +39,6 @@ public class Main {
             double halfWidth = stat.getConfidenceIntervalHalfWidth(LEVEL);
             long totalRuns = stat.getNumberOfObs();
 
-            System.out.printf("Iteration %d:%n", iteration);
             System.out.printf("  Estimated probability (p̂): %.8f%n", average);
             System.out.printf("  Confidence interval (95%%): [%.8f, %.8f]%n", average - halfWidth, average + halfWidth);
             System.out.printf("  Confidence interval half-width: %.8f%n", halfWidth);
@@ -46,6 +46,10 @@ public class Main {
 
             maxHalfWidth /= 2;
         }
+
+
+
+/*
         // Deuxième simulation: Seuil de couverture des intervalles de confiances du théorème central limite
 
         //reinitialisation du random
@@ -89,7 +93,7 @@ public class Main {
                 coverageLowerBound, coverageUpperBound);
 
 
-
+*/
 
 
     }

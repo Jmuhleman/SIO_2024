@@ -22,7 +22,6 @@ public class BirthdayaradoxExperiment implements Experiment {
 
     /**
      * Constructeur de la classe BirthdayaradoxExperiment avec paramètres par défaut
-     *
      */
     public BirthdayaradoxExperiment() {
         this.k = 23;
@@ -40,21 +39,16 @@ public class BirthdayaradoxExperiment implements Experiment {
      */
     @Override
     public double execute(Random rnd) {
-        // Array to count occurrences of each "date"
         int[] dates = new int[y];
 
         // Randomly assign k people to dates
         for (int i = 0; i < k; i++) {
-            dates[rnd.nextInt(y)]++;
-        }
-
-        // Check if any date is chosen m times or more
-        for (int i = 0; i < y; i++) {
-            if (dates[i] >= m) {
+            int chosenDate = rnd.nextInt(y); // Increment the count for a random date
+            dates[chosenDate]++;
+            if (dates[chosenDate] >= m) {
                 return 1.0;
             }
         }
-
         return 0.0;
     }
 }
