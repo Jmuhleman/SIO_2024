@@ -40,10 +40,13 @@ public class BirthdayaradoxExperiment implements Experiment {
     @Override
     public double execute(Random rnd) {
         int[] dates = new int[y];
-
-        // Randomly assign k people to dates
+        int[] randomValues = new int[k];
         for (int i = 0; i < k; i++) {
-            int chosenDate = rnd.nextInt(y); // Increment the count for a random date
+            randomValues[i] = rnd.nextInt(y); // Pré-calculer les valeurs aléatoires
+        }
+
+        for (int i = 0; i < k; i++) {
+            int chosenDate = randomValues[i];
             dates[chosenDate]++;
             if (dates[chosenDate] >= m) {
                 return 1.0;

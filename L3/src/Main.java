@@ -13,45 +13,51 @@ class FairCoinTossExperiment implements Experiment {
 public class Main {
 
     public static void main(String[] args) {
-        // Première simulation: Le 'paradoxe' des anniversaires
-        final int K = 23;
-        final int Y = 365;
-        final int M = 2;
-        final double LEVEL = 0.95; // 1- alpha, alpha = 0.05
-        final double INITIAL_HALF_WIDTH = 1e-4;
-        final long INITIAL_RUNS = 1_000_000;
-        final long ADDITIONAL_RUNS = 100_000;
-        final long SEED = 0x134D6EE;
+        final int K = 23; // Taille du groupe
+        final int Y = 365; // Nombre de jours dans une année
+        final int M = 2; // Nombre minimum de personnes avec le même anniversaire
+        final double LEVEL = 0.95; // Niveau de confiance (1 - alpha, alpha = 0.05)
+        final double INITIAL_HALF_WIDTH = 1e-4; // Demi-largeur initiale
+        final long INITIAL_RUNS = 1_000_000; // Nombre initial de réalisations
+        final long ADDITIONAL_RUNS = 100_000; // Incrément pour les réalisations supplémentaires
+        final long SEED = 0x134D6EE; // Graine pour la reproductibilité
 
-        Random rnd = new Random();
-        rnd.setSeed(SEED);
+        Random rnd = new Random(SEED);
         Experiment bdayExperiment = new BirthdayaradoxExperiment(K, Y, M);
         StatCollector stat = new StatCollector();
 
         double maxHalfWidth = INITIAL_HALF_WIDTH;
 
-        for (int iteration = 1; iteration <= 3; iteration++) {
+        for (int iteration = 1; iteration < 2; iteration++) {
             System.out.printf("Iteration %d:%n", iteration);
 
-            MonteCarloSimulation.simulateTillGivenCIHalfWidth(bdayExperiment, LEVEL, maxHalfWidth, INITIAL_RUNS, ADDITIONAL_RUNS, rnd, stat);
+            long startTime = System.nanoTime();
+
+            MonteCarloSimulation.simulateTillGivenCIHalfWidth(
+                    bdayExperiment, LEVEL, maxHalfWidth, INITIAL_RUNS, ADDITIONAL_RUNS, rnd, stat);
+
+            long endTime = System.nanoTime();
+            double elapsedTimeInSeconds = (endTime - startTime) / 1e9;
 
             double average = stat.getAverage();
             double halfWidth = stat.getConfidenceIntervalHalfWidth(LEVEL);
             long totalRuns = stat.getNumberOfObs();
 
             System.out.printf("  Estimated probability (p̂): %.8f%n", average);
-            System.out.printf("  Confidence interval (95%%): [%.8f, %.8f]%n", average - halfWidth, average + halfWidth);
+            System.out.printf("  Confidence interval (95%%): [%.8f, %.8f]%n",
+                    average - halfWidth, average + halfWidth);
             System.out.printf("  Confidence interval half-width: %.8f%n", halfWidth);
-            System.out.printf("  Total realizations generated: %d%n%n", totalRuns);
+            System.out.printf("  Total realizations generated: %d%n", totalRuns);
+            System.out.printf("  Execution time: %.3f seconds%n%n", elapsedTimeInSeconds);
 
             maxHalfWidth /= 2;
         }
 
 
 
-/*
-        // Deuxième simulation: Seuil de couverture des intervalles de confiances du théorème central limite
 
+        // Deuxième simulation: Seuil de couverture des intervalles de confiances du théorème central limite
+        final double TRUE_P23 = 0.5072972343;
         //reinitialisation du random
         rnd.setSeed(SEED);
         rnd.setSeed(SEED); // Réinitialisation du générateur pseudo-aléatoire
@@ -93,7 +99,7 @@ public class Main {
                 coverageLowerBound, coverageUpperBound);
 
 
-*/
+
 
 
     }
