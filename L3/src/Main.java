@@ -2,6 +2,7 @@ import montecarlo.*;
 import statistics.*;
 
 import java.util.Random;
+
 /*
 // Juste pour l'exemple
 class FairCoinTossExperiment implements Experiment {
@@ -17,7 +18,7 @@ public class Main {
         // Première simulation: Estimation de la probabilité p23
         final int K = 23; // Taille du groupe
         final int Y = 365; // Nombre de jours dans une année
-        final int M = 2; // Nombre minimum de personnes avec le même anniversaire
+        int M = 2; // Nombre minimum de personnes avec le même anniversaire
         final double LEVEL = 0.95; // Niveau de confiance (1 - alpha, alpha = 0.05)
         final double INITIAL_HALF_WIDTH = 1e-4; // Demi-largeur initiale
         final long INITIAL_RUNS = 1_000_000; // Nombre initial de réalisations
@@ -58,9 +59,11 @@ public class Main {
 */
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
         // Deuxième simulation: Seuil de couverture des intervalles de confiance
+        long N = 1_000_0; // Nombre de réalisations pour chaque simulation
+/*
         final double TRUE_P23 = 0.5072972343; // Valeur théorique de p23
-        final long N = 1_000_000; // Nombre de réalisations pour chaque simulation
         rnd.setSeed(SEED); // Réinitialisation de la graine
 
         final long NUM_SIMULATIONS = 1000; // Nombre total de simulations
@@ -68,15 +71,14 @@ public class Main {
 
         for (int i = 0; i < NUM_SIMULATIONS; i++) {
             //TODO peut etre faire un init pour aller plus vite hehe...
-            StatCollector stat_2 = new StatCollector();
-
-            // pour garantir l'independance des simulations
+            stat.init();
+            // pour garantir l'indépendance des simulations
             rnd.setSeed(SEED + i);
-            MonteCarloSimulation.simulateNRuns(bdayExperiment, N, rnd, stat_2);
+            MonteCarloSimulation.simulateNRuns(bdayExperiment, N, rnd, stat);
 
             // Calculer l'intervalle de confiance
-            double estimatedP = stat_2.getAverage(); // Moyenne estimée
-            double halfWidth = stat_2.getConfidenceIntervalHalfWidth(LEVEL); // Demi-largeur
+            double estimatedP = stat.getAverage(); // Moyenne estimée
+            double halfWidth = stat.getConfidenceIntervalHalfWidth(LEVEL); // Demi-largeur
             double lowerBound = estimatedP - halfWidth; // Borne inférieure
             double upperBound = estimatedP + halfWidth; // Borne supérieure
 
@@ -100,40 +102,39 @@ public class Main {
         System.out.printf("Intervalle de confiance pour la couverture (95%%): [%.5f, %.5f]%n",
                 coverageLowerBound, coverageUpperBound);
 
-
+*/
 
 //--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
         // Troisième tâche : Déterminer le nombre minimal K
         final int MIN_K = 80; // Taille minimale du groupe
         final int MAX_K = 100; // Taille maximale du groupe
-        final int M_ = 3; // Nombre minimum de personnes partageant un anniversaire
+        M = 3; // Nombre minimum de personnes partageant un anniversaire
         final double THRESHOLD = 0.5; // Seuil de probabilité
-        final long N_ = 1_000_000; // Nombre de réalisations pour chaque simulation
+        N = 1_000_00; // Nombre de réalisations pour chaque simulation
 
         int minimalK = -1; // Variable pour stocker le K trouvé
         double estimatedP = 0.0; // Probabilité estimée pour le K trouvé
 
         // Parcourir les valeurs de K de MIN_K à MAX_K
-        for (int K_ = MIN_K; K_ <= MAX_K; K_++) {
+        for (int actual_k = MIN_K; actual_k <= MAX_K; actual_k++) {
             // Réinitialiser le générateur pseudo-aléatoire
             rnd.setSeed(SEED);
 
             // Créer un nouvel objet StatCollector
             StatCollector stat_3 = new StatCollector();
 
-            // Créer un nouvel objet BirthdayaradoxExperiment avec K, Y, M
-            BirthdayaradoxExperiment bdayExperiment_ = new BirthdayaradoxExperiment(K_, Y, M_);
+            bdayExperiment.set(actual_k, Y, M);
 
             // Générer N réalisations pour ce K
-            MonteCarloSimulation.simulateNRuns(bdayExperiment_, N_, rnd, stat_3);
+            MonteCarloSimulation.simulateNRuns(bdayExperiment, N, rnd, stat_3);
 
             // Calculer la probabilité estimée
             estimatedP = stat_3.getAverage();
 
             // Vérifier si la probabilité dépasse le seuil
             if (estimatedP > THRESHOLD) {
-                minimalK = K_; // Stocker le premier K satisfaisant la condition
+                minimalK = actual_k; // Stocker le premier K satisfaisant la condition
                 break; // Arrêter la recherche une fois que la condition est remplie
             }
         }
@@ -144,9 +145,6 @@ public class Main {
         } else {
             System.out.println("Aucun K trouvé entre " + MIN_K + " et " + MAX_K + " satisfaisant la condition.");
         }
-
-
-
 
 
     }
