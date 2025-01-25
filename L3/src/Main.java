@@ -13,6 +13,8 @@ class FairCoinTossExperiment implements Experiment {
 public class Main {
 
     public static void main(String[] args) {
+
+        // Première simulation: Estimation de la probabilité p23
         final int K = 23; // Taille du groupe
         final int Y = 365; // Nombre de jours dans une année
         final int M = 2; // Nombre minimum de personnes avec le même anniversaire
@@ -23,11 +25,11 @@ public class Main {
         final long SEED = 0x134D6EE; // Graine pour la reproductibilité
 
         Random rnd = new Random(SEED);
-        Experiment bdayExperiment = new BirthdayaradoxExperiment(K, Y, M);
+        BirthdayaradoxExperiment bdayExperiment = new BirthdayaradoxExperiment(K, Y, M);
         StatCollector stat = new StatCollector();
 
         double maxHalfWidth = INITIAL_HALF_WIDTH;
-
+/*
         for (int iteration = 1; iteration < 2; iteration++) {
             System.out.printf("Iteration %d:%n", iteration);
 
@@ -53,32 +55,32 @@ public class Main {
             maxHalfWidth /= 2;
         }
 
+*/
 
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // Deuxième simulation: Seuil de couverture des intervalles de confiance
+        final double TRUE_P23 = 0.5072972343; // Valeur théorique de p23
+        final long N = 1_000_000; // Nombre de réalisations pour chaque simulation
+        rnd.setSeed(SEED); // Réinitialisation de la graine
 
-
-        // Deuxième simulation: Seuil de couverture des intervalles de confiances du théorème central limite
-        final double TRUE_P23 = 0.5072972343;
-        //reinitialisation du random
-        rnd.setSeed(SEED);
-        rnd.setSeed(SEED); // Réinitialisation du générateur pseudo-aléatoire
-
+        final long NUM_SIMULATIONS = 1000; // Nombre total de simulations
         int countContainingTrueP = 0; // Nombre d'intervalles contenant la vraie valeur de p23
-        final long NUM_SIMULATIONS = 1000;
-        // Effectuer 1000 simulations
+
         for (int i = 0; i < NUM_SIMULATIONS; i++) {
-            StatCollector stat = new StatCollector();
-            Experiment bdayExperiment_ = new BirthdayaradoxExperiment(K, Y, M);
+            //TODO peut etre faire un init pour aller plus vite hehe...
+            StatCollector stat_2 = new StatCollector();
 
-            // Générer N réalisations pour cette simulation
-            MonteCarloSimulation.simulateNRuns(bdayExperiment_, N, rnd, stat);
+            // pour garantir l'independance des simulations
+            rnd.setSeed(SEED + i);
+            MonteCarloSimulation.simulateNRuns(bdayExperiment, N, rnd, stat_2);
 
-            // Calcul de l'intervalle de confiance
-            double estimatedP = stat.getAverage();
-            double halfWidth = stat.getConfidenceIntervalHalfWidth(LEVEL);
-            double lowerBound = estimatedP - halfWidth;
-            double upperBound = estimatedP + halfWidth;
+            // Calculer l'intervalle de confiance
+            double estimatedP = stat_2.getAverage(); // Moyenne estimée
+            double halfWidth = stat_2.getConfidenceIntervalHalfWidth(LEVEL); // Demi-largeur
+            double lowerBound = estimatedP - halfWidth; // Borne inférieure
+            double upperBound = estimatedP + halfWidth; // Borne supérieure
 
-            // Vérifier si la vraie valeur p23 se trouve dans l'intervalle
+            // Vérifier si la vraie valeur p23 est dans l'intervalle
             if (TRUE_P23 >= lowerBound && TRUE_P23 <= upperBound) {
                 countContainingTrueP++;
             }
@@ -89,14 +91,59 @@ public class Main {
 
         // Calcul de l'intervalle de confiance associé (toujours à 95%)
         double stdError = Math.sqrt((empiricalCoverage * (1 - empiricalCoverage)) / NUM_SIMULATIONS);
-        double zValue = 1.96; // Pour un seuil de confiance à 95%
-        double coverageLowerBound = empiricalCoverage - zValue * stdError;
-        double coverageUpperBound = empiricalCoverage + zValue * stdError;
+        double zValue = 1.96; // Valeur critique pour un seuil de confiance de 95%
+        double coverageLowerBound = empiricalCoverage - zValue * stdError; // Borne inférieure
+        double coverageUpperBound = empiricalCoverage + zValue * stdError; // Borne supérieure
 
         // Afficher les résultats
         System.out.printf("Seuil empirique de couverture: %.5f%n", empiricalCoverage);
         System.out.printf("Intervalle de confiance pour la couverture (95%%): [%.5f, %.5f]%n",
                 coverageLowerBound, coverageUpperBound);
+
+
+
+//--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        // Troisième tâche : Déterminer le nombre minimal K
+        final int MIN_K = 80; // Taille minimale du groupe
+        final int MAX_K = 100; // Taille maximale du groupe
+        final int M_ = 3; // Nombre minimum de personnes partageant un anniversaire
+        final double THRESHOLD = 0.5; // Seuil de probabilité
+        final long N_ = 1_000_000; // Nombre de réalisations pour chaque simulation
+
+        int minimalK = -1; // Variable pour stocker le K trouvé
+        double estimatedP = 0.0; // Probabilité estimée pour le K trouvé
+
+        // Parcourir les valeurs de K de MIN_K à MAX_K
+        for (int K_ = MIN_K; K_ <= MAX_K; K_++) {
+            // Réinitialiser le générateur pseudo-aléatoire
+            rnd.setSeed(SEED);
+
+            // Créer un nouvel objet StatCollector
+            StatCollector stat_3 = new StatCollector();
+
+            // Créer un nouvel objet BirthdayaradoxExperiment avec K, Y, M
+            BirthdayaradoxExperiment bdayExperiment_ = new BirthdayaradoxExperiment(K_, Y, M_);
+
+            // Générer N réalisations pour ce K
+            MonteCarloSimulation.simulateNRuns(bdayExperiment_, N_, rnd, stat_3);
+
+            // Calculer la probabilité estimée
+            estimatedP = stat_3.getAverage();
+
+            // Vérifier si la probabilité dépasse le seuil
+            if (estimatedP > THRESHOLD) {
+                minimalK = K_; // Stocker le premier K satisfaisant la condition
+                break; // Arrêter la recherche une fois que la condition est remplie
+            }
+        }
+
+        if (minimalK != -1) {
+            System.out.printf("Nombre minimal K : %d%n", minimalK);
+            System.out.printf("Probabilité estimée pour K = %d : %.8f%n", minimalK, estimatedP);
+        } else {
+            System.out.println("Aucun K trouvé entre " + MIN_K + " et " + MAX_K + " satisfaisant la condition.");
+        }
 
 
 

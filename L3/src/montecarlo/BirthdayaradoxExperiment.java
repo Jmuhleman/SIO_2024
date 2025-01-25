@@ -20,13 +20,11 @@ public class BirthdayaradoxExperiment implements Experiment {
         this.m = m;
     }
 
-    /**
-     * Constructeur de la classe BirthdayaradoxExperiment avec paramètres par défaut
-     */
-    public BirthdayaradoxExperiment() {
-        this.k = 23;
-        this.y = 365;
-        this.m = 2;
+    public void set(int k, int y, int m) {
+        this.k = k;
+        this.y = y;
+        this.m = m;
+
     }
 
     /**
