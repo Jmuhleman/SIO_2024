@@ -59,7 +59,7 @@ public class MonteCarloSimulation {
 
 		simulateNRuns(exp, initialNumberOfRuns, rnd, stat);
 		long firstAdditionalNumberOfRuns =
-				(long) Math.ceil(Math.pow(InverseStdNormalCDF.getQuantile((1 + level)/2)
+				(long) Math.ceil(Math.pow(InverseStdNormalCDF.getQuantile((1 + level) / 2)
 						* Math.sqrt(stat.getVariance()) / stat.getConfidenceIntervalHalfWidth(level), 2));
 
 		simulateNRuns(exp, firstAdditionalNumberOfRuns, rnd, stat);
